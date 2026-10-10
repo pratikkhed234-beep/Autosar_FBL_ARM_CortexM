@@ -1,0 +1,20 @@
+# Build outputs
+build/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+
+# Cloned/external dependencies & virtual environments
+can_uds/
+isotp-c/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temporary helper scripts
+FBL_MCU_Project/generate_makefile.py
