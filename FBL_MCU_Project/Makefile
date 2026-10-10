@@ -32,10 +32,14 @@ OBJS := $(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 all: init_dirs $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/$(TARGET).hex
 
 init_dirs:
+ifeq ($(OS),Windows_NT)
 	@cmd /c "if not exist $(BUILD_DIR)\App\BootManager mkdir $(BUILD_DIR)\App\BootManager"
 	@cmd /c "if not exist $(BUILD_DIR)\MCAL\Can mkdir $(BUILD_DIR)\MCAL\Can"
 	@cmd /c "if not exist $(BUILD_DIR)\MCAL\Fls mkdir $(BUILD_DIR)\MCAL\Fls"
 	@cmd /c "if not exist $(BUILD_DIR)\BSW\Dcm mkdir $(BUILD_DIR)\BSW\Dcm"
+else
+	@mkdir -p $(BUILD_DIR)/App/BootManager $(BUILD_DIR)/MCAL/Can $(BUILD_DIR)/MCAL/Fls $(BUILD_DIR)/BSW/Dcm
+endif
 
 $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -51,4 +55,8 @@ $(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf
 	$(OBJCOPY) -O ihex $< $@
 
 clean:
+ifeq ($(OS),Windows_NT)
 	@cmd /c "if exist $(BUILD_DIR) rd /s /q $(BUILD_DIR)"
+else
+	@rm -rf $(BUILD_DIR)
+endif

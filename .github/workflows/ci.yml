@@ -19,6 +19,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f Host_Flashing_Tool/requirements.txt ]; then pip install -r Host_Flashing_Tool/requirements.txt; fi
+          pip install python-can || true
+
       - name: Run UDS Diagnostic Validation Suite
         run: |
           python Host_Flashing_Tool/run_full_demo.py
