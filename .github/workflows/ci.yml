@@ -38,3 +38,13 @@ jobs:
         run: |
           cd FBL_MCU_Project
           make all
+
+      - name: Upload Bootloader Firmware Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: autosar-fbl-firmware
+          path: |
+            FBL_MCU_Project/build/autosar_fbl.bin
+            FBL_MCU_Project/build/autosar_fbl.hex
+            FBL_MCU_Project/build/autosar_fbl.elf
+            FBL_MCU_Project/build/autosar_fbl.map
